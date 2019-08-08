@@ -636,7 +636,7 @@ export default {
 }
 
 .k-editor-bottom-clickarea {
-	cursor:pointer;
+	cursor: text;
 	height: 3rem;
 }
 </style>
