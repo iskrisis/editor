@@ -1,7 +1,6 @@
 <template>
   <div class="k-editor" ref="editor">
     <div class="k-editor-blocks" :key="modified">
-
       <k-draggable :list="blocks" :handle="true" :options="{delay: 2}">
         <div
           v-for="(block, index) in blocks"
@@ -49,6 +48,7 @@
         </div>
       </k-draggable>
     </div>
+	<div class="k-editor-bottom-clickarea" @click="addAfterLast()"></div>
   </div>
 </template>
 
@@ -135,9 +135,16 @@ export default {
     }
   },
   methods: {
+	addAfterLast(){
+		if(this.getLastBlockComponent().content.length === 0) {
+			this.focus(this.blocks.length - 1);
+		} else {
+			this.appendAndFocus();
+		}
+	},
     add(type) {
       this.appendAndFocus({ type: type }, this.selected);
-    },
+	},
     closeOptions(index) {
       const ref = this.$refs["block-options-" + index];
 
@@ -609,7 +616,7 @@ export default {
 }
 .k-editor-blocks {
   position: relative;
-  padding: 1.5rem 0;
+  padding-top: 1.5rem;
   max-width: 50rem;
   margin: 0 auto;
 }
@@ -626,5 +633,10 @@ export default {
 .k-editor-block .ProseMirror a {
   color: #4271ae;
   text-decoration: underline;
+}
+
+.k-editor-bottom-clickarea {
+	cursor:pointer;
+	height: 3rem;
 }
 </style>
